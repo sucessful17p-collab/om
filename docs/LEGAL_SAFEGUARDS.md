@@ -1,0 +1,9 @@
+# Legal safeguards
+
+The Section 479 screening function is a transparent workflow aid, not legal advice, eligibility adjudication, or an instruction to release. A competent court decides the matter. Unknown or conflicting facts require authorised legal review. First-time-offender status is never inferred from absence of data. Unverified sentence limits are not guessed.
+
+The configured rule record is `BNSS-479-2023-v1`, effective 2024-07-01. The source is the [official India Code text of the BNSS, Section 479](https://www.indiacode.nic.in/bitstream/123456789/21544/1/the_bharatiya_nagarik_suraksha_sanhita%2C_2023.pdf); commencement on 1 July 2024 is shown in the [Ministry of Home Affairs notification](https://www.mha.gov.in/sites/default/files/BharatiyaNagarikSurakshaSanhita_24022024.pdf). A qualified legal reviewer must verify the interpretation, effective date and any subsequent amendments/rulings before operational use; reviewer identity and verification date are intentionally marked pending.
+
+The screening implementation records the general one-half threshold and first-time offender one-third threshold, with the statutory definition “never been convicted” requiring official verification; accounts for the death/life-imprisonment exclusion; subtracts accused-delay days only when marked verified; flags multiple pending offences/cases, court-ordered continued detention and custody approaching the supplied maximum; and surfaces the Superintendent application workflow. It uses an approximate 365.25-day year for threshold display, so all calculations need legal review. This is not a complete statutory interpretation of every clause, judicial direction, transitional issue, or interaction with other laws.
+
+Outputs use `potentially_eligible_for_court_consideration`, `not_indicated`, or `legal_review_required`. They never say that a person is entitled to release. All displayed records are synthetic.

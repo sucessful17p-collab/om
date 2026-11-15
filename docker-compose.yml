@@ -1,0 +1,43 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-nyaya_pulse}
+      POSTGRES_USER: ${POSTGRES_USER:-nyaya}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-nyaya} -d ${POSTGRES_DB:-nyaya_pulse}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  api:
+    build: ./backend
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-nyaya}:${POSTGRES_PASSWORD:-change-me}@db:5432/${POSTGRES_DB:-nyaya_pulse}
+      SECRET_KEY: ${SECRET_KEY:-development-only-change-me-replace-before-use}
+      DEMO_SUPERINTENDENT_USERNAME: ${DEMO_SUPERINTENDENT_USERNAME:-demo-superintendent}
+      DEMO_SUPERINTENDENT_PASSWORD: ${DEMO_SUPERINTENDENT_PASSWORD:-DemoOnly-ChangeMe}
+      AUTO_CREATE_SCHEMA: "false"
+    depends_on:
+      db:
+        condition: service_healthy
+    ports: ["8000:8000"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"]
+      interval: 10s
+      timeout: 4s
+      retries: 5
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:8000/api/v1}
+    depends_on:
+      api:
+        condition: service_healthy
+    ports: ["8080:80"]
+volumes:
+  postgres_data:

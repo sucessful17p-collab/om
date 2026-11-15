@@ -33,3 +33,22 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# Node and Vite
+node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Python
+__pycache__/
+.pytest_cache/
+*.py[cod]
+.venv/
+
+# Local data and secrets
+*.db
+*.db-shm
+*.db-wal
+.env
+.coverage
+frontend/tsconfig.tsbuildinfo

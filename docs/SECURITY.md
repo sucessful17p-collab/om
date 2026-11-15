@@ -1,0 +1,5 @@
+# Security status
+
+This is a development prototype. It is not safe for real prisoner, family, case or evidence data. The core case and screening API now requires a short-lived signed bearer session backed by a PBKDF2-hashed account and applies role checks server-side. Logout revokes that session. Seeded demo credentials are development-only. There is no MFA, login rate limiting, user administration, institution-level object isolation, durable audit log, encrypted file store, or production secrets management. Never enter confidential material.
+
+Before deployment with real data: implement institution-level object isolation, MFA for privileged roles, TLS, encrypted backups and storage, secret rotation, retention/deletion controls, upload signature and malware checks, login and API rate limiting, structured security logging, dependency scanning, and an independent security review. Configure `SECRET_KEY` and database credentials outside source control; the sample `.env.example` values are not production secrets.
