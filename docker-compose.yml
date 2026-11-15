@@ -13,7 +13,9 @@ services:
       timeout: 5s
       retries: 10
   api:
-    build: ./backend
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
     environment:
       DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-nyaya}:${POSTGRES_PASSWORD:-change-me}@db:5432/${POSTGRES_DB:-nyaya_pulse}
       SECRET_KEY: ${SECRET_KEY:-development-only-change-me-replace-before-use}
